@@ -1,7 +1,39 @@
-<h1>Mits Entertainment</h1>
+<!doctype html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- CSRF Token -->    
+    <title>Welcome | Mits Entertainment</title>
+    <meta name="title" content="Welcome | Mits Entertainment">
+    <meta name="keywords" content="">
+    <meta name="description" content="Mits Entertainment">
+    <meta property="og:title" content="Welcome | Mits Entertainment" />
+    <meta property="og:description" content="Mits Entertainment" />
+    <meta property="og:url" content="https://www.mitsentertainment.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="Mits Entertainment" />
+    <meta name="twitter:title" content="Welcome | Mits Entertainment" />    
+</head>
+
+<app-nav></app-nav>
+
+<body style="padding: 60px">
+    <div class="container-fluid">
+        <!-- <app-home></app-home> -->
+        <router-outlet></router-outlet>
+    </div>
+</body>
+
+
+
+<!-- <div class="container" style="margin-top: 100px;">
 <ul>
     <li *ngFor='let user of users'>
         {{user.id}} - {{user.userName}}
     </li>
 </ul> 
+</div> -->
