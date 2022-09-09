@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { GALLERY_CONFIG } from 'ng-gallery';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,6 +20,8 @@ import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { TestErrosComponent } from './errors/test-erros/test-erros.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { MemberCardComponent } from './members/member-card/member-card.component';
+import { JwtInterceptor } from './_interceptors/jwt.interceptor';
 
 
 @NgModule({
@@ -33,7 +36,8 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     MessagesComponent,
     TestErrosComponent,
     NotFoundComponent,
-    ServerErrorComponent
+    ServerErrorComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,16 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     
   ],
   providers: [
-    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:JwtInterceptor,multi:true},
+    {
+      provide: GALLERY_CONFIG,
+      useClass:MemberDetailComponent,
+      useValue: {
+        dots: true,
+        imageSize: 'cover'
+      }
+    }
   ],
   bootstrap: [AppComponent]
 })
