@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UrlSegment } from '@angular/router';
-import { UserEntity } from './_models/user';
+import { User } from './_models/user';
 import { AccountService } from './_services/account-service.service';
 
 
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   }
   //Set User from local storage
   setCurrentUser() {
-    const user: UserEntity = JSON.parse(localStorage.getItem('user'));
+    const user: User = JSON.parse(localStorage.getItem('user'));
     this.accountServices.setCurrentUser(user);
   }
   //Get All Users List
