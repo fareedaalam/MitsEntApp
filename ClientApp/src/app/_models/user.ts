@@ -1,4 +1,4 @@
-export interface UserEntity{
+export interface User{
     username:string
     token :string
 }
