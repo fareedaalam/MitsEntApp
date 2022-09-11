@@ -41,11 +41,11 @@ namespace API.Controllers
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-           return new UserDto
-                {
-                    Username = user.UserName,
-                    Token = _tokenService.CreateToken(user)
-                };
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
 
         }
 
@@ -57,6 +57,7 @@ namespace API.Controllers
             try
             {
                 var usr = await _context.Users
+                .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.username);
 
                 if (usr == null) return Unauthorized("Invalid UserName");
@@ -72,7 +73,8 @@ namespace API.Controllers
                 return new UserDto
                 {
                     Username = usr.UserName,
-                    Token = _tokenService.CreateToken(usr)
+                    Token = _tokenService.CreateToken(usr),
+                    PhotoUrl = usr.Photos.FirstOrDefault(x => x.IsMain)?.Url
                 };
             }
 

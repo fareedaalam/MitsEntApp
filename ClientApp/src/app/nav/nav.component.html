@@ -24,9 +24,10 @@
         </ul>
 
 
-        <div class="dropdown" style="margin-right: 35px" *ngIf="(accountService.currentUser$ |async) as user" dropdown>
-            <a class="dropdown-toggle text-light" dropdownToggle> Welocom {{user.username | titlecase}}</a>
-            <div class="dropdown-menu" *dropdownMenu>
+        <div class="dropdown"  *ngIf="(accountService.currentUser$ |async) as user" dropdown>
+            <img src="{{user.photoUrl}}" alt="{{user.username}}">
+            <a class="dropdown-toggle text-light" dropdownToggle> Welocome {{user.username | titlecase}}</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" (click)="logout()">Logout</a>

@@ -68,7 +68,7 @@ namespace API
 
             app.UseRouting();
             //Cross site 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200","https://localhost:4200", "https://web.postman.co"));
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200","https://localhost:4200", "https://web.postman.co","https://web.postman.co/"));
             app.UseAuthentication();
             app.UseAuthorization();
 
