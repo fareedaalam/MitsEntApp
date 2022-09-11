@@ -35,15 +35,7 @@ export class MemberDetailComponent implements OnInit {
       imagesUrls.push(new ImageItem({
         src: photo?.url,
         thumb: photo?.url
-      }))
-      imagesUrls.push(new ImageItem({
-        src: photo?.url,
-        thumb: photo?.url
-      }))
-      imagesUrls.push(new ImageItem({
-        src: photo?.url,
-        thumb: photo?.url
-      }))
+      }))      
     }
     return imagesUrls;
   }
