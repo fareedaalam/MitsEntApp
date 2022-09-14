@@ -14,7 +14,7 @@
             <div class="cord-body text-center">
                 <div>
                     <strong>Location:</strong>
-                    <p>{{member.City}}, {{member.country}}</p>
+                    <p>{{member.city}}, {{member.country}}</p>
                 </div>
                 <div>
                     <strong>Age:</strong>
@@ -22,11 +22,11 @@
                 </div>
                 <div>
                     <strong>Last Active:</strong>
-                    <p>{{member.lastActive}}</p>
+                    <p>{{member.lastActive | timeago}}</p>
                 </div>
                 <div>
                     <strong>Member since:</strong>
-                    <p>{{member.created}}</p>
+                    <p>{{member.created | date}}</p>
                 </div>
             </div>
             <div class="card footer text-center">

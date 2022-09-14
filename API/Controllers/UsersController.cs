@@ -7,6 +7,7 @@ using API.Data;
 using API.DTOs;
 using API.Entities;
 using API.Extentions;
+using API.Helpers;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -32,9 +33,16 @@ namespace API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<AppUserDto>>> GetUsers([FromQuery] UserParams userParams)
         {
-            var user = await _userRepository.GetMembersAsync();
+            //get the filter data
+            var users = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = users.UserName;
+            if (string.IsNullOrEmpty(userParams.Gender))
+                userParams.Gender = users.Gender == "male" ? "female" : "male";
+
+            var user = await _userRepository.GetMembersAsync(userParams);
+            Response.AddPaginationHeader(user.CurrentPage, user.PageSize, user.TotalCount, user.TotalPages);
             return Ok(user);
 
         }
@@ -103,7 +111,7 @@ namespace API.Controllers
             {
                 //return _mapper.Map<PhotoDto>(photo);
                 //this will give the 201 status with currnt Api 
-                return CreatedAtRoute("GetUser", 
+                return CreatedAtRoute("GetUser",
                 new { username = user.UserName }, _mapper.Map<PhotoDto>(photo));
             }
 
