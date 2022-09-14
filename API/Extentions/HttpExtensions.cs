@@ -9,6 +9,7 @@ namespace API.Extentions
 {
     public static class HttpExtensions
     {
+        //Add params into responce headers with the help of HttpResponce extentions
         public static void AddPaginationHeader(this HttpResponse response, int currentPage,
         int itemsPerPage, int totalItems, int totalPages)
         {
