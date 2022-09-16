@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
    // this.getUsers();
-    //this.setCurrentUser();
+   this.setCurrentUser();
   }
   //Set User from local storage
   setCurrentUser() {
