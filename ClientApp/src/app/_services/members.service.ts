@@ -6,7 +6,7 @@ import { Member } from '../_models/member'
 import { PaginatedResult } from '../_models/pagination';
 import { User } from '../_models/user';
 import { UserParams } from '../_models/userParams';
-import { AccountService } from './account-service.service';
+import { AccountService } from './account-service';
 import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 @Injectable({

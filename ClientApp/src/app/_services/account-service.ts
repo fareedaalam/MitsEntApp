@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
@@ -43,6 +44,12 @@ export class AccountService {
   }
 
   setCurrentUser(user: User) {
+    //add roles
+    user.roles=[];
+    const role=this.getDecodedToken(user.token).role;
+    //check multi roles array of single string role
+    Array.isArray(role) ? user.roles= role : user.roles.push(role);
+
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
   }
@@ -50,6 +57,12 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  getDecodedToken(token){
+    //var k: any =JSON.parse(Buffer.from(token.split('.')[1],'base64'))
+    return JSON.parse(atob(token.split('.')[1]))
+
   }
 }
  

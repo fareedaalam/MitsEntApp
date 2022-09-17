@@ -47,7 +47,7 @@ namespace API.Controllers
 
         }
 
-
+    
         [HttpGet("{username}", Name = "GetUser")]
         public async Task<ActionResult<AppUserDto>> GetUser(String username)
         {
