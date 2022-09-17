@@ -3,7 +3,7 @@ import { Router, UrlSerializer } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/user';
-import { AccountService } from '../_services/account-service.service';
+import { AccountService } from '../_services/account-service';
 
 
 @Component({

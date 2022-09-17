@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { UrlSegment } from '@angular/router';
 import { User } from './_models/user';
-import { AccountService } from './_services/account-service.service';
+import { AccountService } from './_services/account-service';
 
 
 
