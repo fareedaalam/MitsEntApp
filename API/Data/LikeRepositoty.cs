@@ -42,8 +42,8 @@ namespace API.Data
             }
             var likedUsers = users.Select(user => new LikeDto
             {
-                UserName = user.UserName,
-                KnowsAs = user.KnownAs,
+                Username = user.UserName.ToLower(),
+                knowsAs = user.KnownAs,
                 Age = user.DateOfBirth.CalculateAge(),
                 PhotoUrl = user.Photos.FirstOrDefault(p => p.IsMain).Url,
                 City = user.City,
