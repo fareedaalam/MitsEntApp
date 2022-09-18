@@ -38,6 +38,7 @@ namespace API.Data
             // .AsQueryable();
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
             query = query.Where(u => u.Gender == userParams.Gender);
+            query = query.Where(u=> u.KnownAs == userParams.KnownAs);
 
             var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
             var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
@@ -82,6 +83,8 @@ namespace API.Data
                 .Where(x=> x.UserName ==username)
                 .Select(x=> x.Gender).FirstOrDefaultAsync();
         }
+
+        
 
         // public async Task<bool> SaveAllAsync()
         // {

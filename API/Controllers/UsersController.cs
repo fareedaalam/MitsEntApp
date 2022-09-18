@@ -39,9 +39,14 @@ namespace API.Controllers
         {
             //get the filter data
             var gender = await _unitOfWork.UserRepository.GetUserGender(User.GetUsername());
+           // var knownas = await _unitOfWork.UserRepository.GetUserKnownAs(User.GetUsername());
+
             userParams.CurrentUsername = User.GetUsername();
             if (string.IsNullOrEmpty(userParams.Gender))
                 userParams.Gender = gender == "male" ? "female" : "male";
+
+            if(string.IsNullOrEmpty(userParams.KnownAs))
+                userParams.KnownAs = userParams.KnownAs == "member" ? "contestant" : "member";
 
             var user = await _unitOfWork.UserRepository.GetMembersAsync(userParams);
             Response.AddPaginationHeader(user.CurrentPage, user.PageSize, user.TotalCount, user.TotalPages);

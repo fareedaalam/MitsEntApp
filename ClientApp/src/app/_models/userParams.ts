@@ -7,9 +7,11 @@ export class UserParams {
     pageNumber = 1;
     pageSize = 5;
     orderBy = 'lastActive';
+    knownAs = 'constestant';
 
     constructor(user: User) {
         this.gender = user.gender === 'female' ? 'male' : 'female';
+        this.knownAs =user.knownAs === 'contestant' ? 'member' :'contestant';
     }
 
 }

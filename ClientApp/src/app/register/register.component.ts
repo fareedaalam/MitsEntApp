@@ -11,7 +11,7 @@ import { AccountService } from '../_services/account-service';
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  //model: any = {};
+  contestant=true;
   registerForm: FormGroup;
   maxDate: Date;
   validationErrors: string[] = [];
@@ -31,12 +31,12 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       gender: ['male'],
       username: ['', Validators.required],
-      knownAs: ['', Validators.required],
+      knownAs: ['contestant', Validators.required],
       dateOfBirth: ['', Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required],
-      email: ['', Validators.email],
-      mobile: ['', Validators.required],
+      //city: ['', Validators.required],
+      //country: ['', Validators.required],
+      //email: ['', Validators.email],
+      mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       password: ['', [Validators.required,
       Validators.minLength(4), Validators.maxLength(8)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
@@ -53,19 +53,18 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register() {
+  register() {   
+   console.log(this.registerForm.value) ;
     this.accountServices.register(this.registerForm.value).subscribe({
-      next: responce => {
-        //this.cancle();
+      next: responce => {  
+       // this.cancle();    
         this.router.navigateByUrl('/members');
       },
-      error: error => {
-        console.log(error);
-        this.validationErrors = error;
+      error: error => {        
+        console.log('error registrations', error);
       }
-
     })
-  }
+   }
 
   cancle() {
     this.cancelRegister.emit(false);
