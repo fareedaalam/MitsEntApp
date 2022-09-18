@@ -5,6 +5,11 @@
     <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">
         Please enter a {{label}}
     </div>
+    <div *ngIf="ngControl.control.errors?.pattern" class="invalid-feedback">
+       Not valid {{label}}
+    </div>
+    
+    
     <div *ngIf="ngControl.control.errors?.minlength" class="invalid-feedback">
         {{label}} must be at least {{ngControl.control.errors.minlength['requiredLength']}}
     </div>

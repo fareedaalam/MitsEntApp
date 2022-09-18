@@ -67,7 +67,7 @@ namespace API.Data
                 .WithMany(m => m.MessagesSent)//sender has many msg sent
                 .OnDelete(DeleteBehavior.Restrict);
 
-        builder.ApplyUtcDateTimeConverter();
+            builder.ApplyUtcDateTimeConverter();
 
 
 

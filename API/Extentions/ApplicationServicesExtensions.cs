@@ -21,9 +21,12 @@ namespace API.Extentions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+           
             services.AddDbContext<DataContext>(options =>
             {
-                options.UseSqlite(config.GetConnectionString("DefaultConnection"));
+                options.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+                //to ignore the UTC time problem
+                AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
             });
 
             return services;
