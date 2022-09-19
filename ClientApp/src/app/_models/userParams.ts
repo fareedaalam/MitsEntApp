@@ -5,7 +5,7 @@ export class UserParams {
     minAge = 10;
     maxAge = 99;
     pageNumber = 1;
-    pageSize = 5;
+    pageSize = 10;
     orderBy = 'lastActive';
     knownAs = 'constestant';
 
