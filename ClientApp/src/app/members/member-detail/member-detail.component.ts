@@ -7,6 +7,7 @@ import { TabDirective, TabsetComponent } from 'ngx-bootstrap/tabs';
 import { IfStmt } from '@angular/compiler';
 import { Message } from 'src/app/_models/message';
 import { MessageService } from 'src/app/_services/message.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-member-detail',
@@ -23,7 +24,7 @@ export class MemberDetailComponent implements OnInit {
 
 
   constructor(private memberService: MembersService, private route: ActivatedRoute,
-    private messageServices: MessageService) { }
+    private messageServices: MessageService, private toastr:ToastrService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(data=>{
@@ -78,5 +79,11 @@ export class MemberDetailComponent implements OnInit {
     }
   }
 
+  addLike(member: Member) {
+    this.memberService.addLike(member.username).subscribe(() => {
+      this.toastr.success('You have liked ' + member.knownAs);
+    })
+
+  }
 
 }
