@@ -11,7 +11,7 @@ import { AccountService } from '../_services/account-service';
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  contestant=true;
+  contestant = true;
   registerForm: FormGroup;
   maxDate: Date;
   validationErrors: string[] = [];
@@ -38,7 +38,10 @@ export class RegisterComponent implements OnInit {
       //email: ['', Validators.email],
       mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       password: ['', [Validators.required,
-      Validators.minLength(4), Validators.maxLength(8)]],
+            Validators.minLength(4),
+             Validators.maxLength(28)],
+            ],
+
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
     })
     this.registerForm.controls.password.valueChanges.subscribe(() => {
@@ -53,18 +56,16 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register() {   
-   console.log(this.registerForm.value) ;
+  register() {
     this.accountServices.register(this.registerForm.value).subscribe({
-      next: responce => {  
-       // this.cancle();    
-        this.router.navigateByUrl('/members');
-      },
-      error: error => {        
-        console.log('error registrations', error);
-      }
+      next: responce => { this.router.navigateByUrl('/members'); },
+      error: error => {
+          this.validationErrors = error; 
+          console.log(error);  
+          }
     })
-   }
+  }
+  
 
   cancle() {
     this.cancelRegister.emit(false);

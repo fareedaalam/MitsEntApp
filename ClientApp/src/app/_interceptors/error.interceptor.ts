@@ -23,13 +23,24 @@ export class ErrorInterceptor implements HttpInterceptor {
               if (error.error.errors) {
                 const modelStateErrors = [];
                 for (const key in error.error.errors) {
-                  modelStateErrors.push(error.error.errors[key])
+                  if (error.error.errors[key]) {
+                    modelStateErrors.push(error.error.errors[key])
+                  }
                 }
                 throw modelStateErrors.flat();
-              } else if (typeof (error.error) === 'object') {
+              }
+              else if (typeof (error.error) === 'object') {
+                const modelStateErrors = [];
+                for (const key in error.error) {
+                  if (error.error[key]) {
+                    modelStateErrors.push(error.error[key].code)
+                  }
+                }
+                throw modelStateErrors.flat();
+                //this.toastr.error(error.statusText+'FArerdobj', error.status);
+              }
+              else {
                 this.toastr.error(error.statusText, error.status);
-              } else {
-                this.toastr.error(error.error, error.status);
               }
               break;
             case 401:
