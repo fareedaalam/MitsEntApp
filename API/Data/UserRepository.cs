@@ -37,8 +37,10 @@ namespace API.Data
             // .AsNoTracking()
             // .AsQueryable();
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
-            query = query.Where(u => u.Gender == userParams.Gender);
-            query = query.Where(u=> u.KnownAs == userParams.KnownAs);
+            //if(!String.IsNullOrEmpty(userParams.Gender))
+                query = query.Where(u => u.Gender == userParams.Gender);
+            //if(!String.IsNullOrEmpty(userParams.KnownAs))
+                query = query.Where(u => u.KnownAs == userParams.KnownAs);
 
             var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
             var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
@@ -51,7 +53,7 @@ namespace API.Data
                 "created" => query.OrderByDescending(u => u.Created),
                 _ => query.OrderByDescending(u => u.LastActive)
             };
-                
+
             return await PagedList<AppUserDto>.CreateAsync(query.ProjectTo<AppUserDto>(_mapper
                 .ConfigurationProvider).AsNoTracking(),
                     userParams.PageNumber, userParams.PageSize);
@@ -80,20 +82,31 @@ namespace API.Data
         public async Task<string> GetUserGender(string username)
         {
             return await _context.Users
-                .Where(x=> x.UserName ==username)
-                .Select(x=> x.Gender).FirstOrDefaultAsync();
+                .Where(x => x.UserName == username)
+                .Select(x => x.Gender).FirstOrDefaultAsync();
         }
-
-        
-
-        // public async Task<bool> SaveAllAsync()
-        // {
-        //     return await _context.SaveChangesAsync() > 0;
-        // }
 
         public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;
+        }
+
+        public void DeActivateUser(AppUser user)
+        {
+            _context.Entry(user).State = EntityState.Modified;
+
+        }
+
+        public async Task<IEnumerable<AppUserDto>> GetUserByKnownAs(UserParams userParam)
+        {
+            return await _context.Users
+            .Include(x => x.Photos)
+            .Where(x => x.KnownAs == userParam.KnownAs)
+            .Where(x => x.IsActive == userParam.IsActive)
+            .Where(x=>x.UserName.ToLower()!="admin")
+            .Take(userParam.RegistrationCount)
+            .ProjectTo<AppUserDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();            
         }
     }
 }

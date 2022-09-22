@@ -20,9 +20,14 @@ public class AccountController : BaseApiController
     [HttpPost("register")]
     public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
+        UserParams userParams= new UserParams();
 
         if (await UserExists(registerDto.UserName)) return BadRequest("User Already Taken");
         var user = _mapper.Map<AppUser>(registerDto);
+        //user.
+
+        int RegistrationCount = _userManager.Users.Count(x => x.KnownAs == "contestant");
+        if (RegistrationCount >= userParams.RegistrationCount ) return BadRequest("Registration is over!");
 
         // using var hmac = new HMACSHA512();
         //Create a user hasing 

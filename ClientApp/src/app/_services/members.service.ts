@@ -104,5 +104,9 @@ export class MembersService {
 
   }
 
+  getContestant(){
+    return this.http.get<Partial<Member[]>>(this.baseUrl+'users/get-user-knownAs/?KnownAs=contestant');
+  }
+
 
 }

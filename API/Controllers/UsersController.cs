@@ -2,8 +2,6 @@ namespace API.Controllers;
 
 public class UsersController : BaseApiController
 {
-
-
     private readonly IMapper _mapper;
     private readonly IPhotoService _photoService;
     private readonly IUnitOfWork _unitOfWork;
@@ -37,7 +35,15 @@ public class UsersController : BaseApiController
         return Ok(user);
 
     }
+    [AllowAnonymous]
+    [HttpGet("get-user-knownAs")]
+    public async Task<ActionResult<AppUserDto>> GetUserByKnownAs([FromQuery] UserParams userParams)
+    {
+        var user = await _unitOfWork.UserRepository.GetUserByKnownAs(userParams);
+        if (user == null) return NotFound("No records found");
+        return Ok(user);
 
+    }
 
     [HttpGet("{username}", Name = "GetUser")]
     public async Task<ActionResult<AppUserDto>> GetUser(String username)
@@ -54,12 +60,6 @@ public class UsersController : BaseApiController
         }
     }
 
-    // [HttpGet("{username}", Name = "GetUser")]
-    // public async Task<ActionResult<AppUserDto>> GetUser(string username)
-    // {
-    //     return await _unitOfWork.UserRepository.GetMemberAsync(username);
-    // }
-
     [HttpPut]
     public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
     {
@@ -70,6 +70,8 @@ public class UsersController : BaseApiController
         var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
         //Map dto with usertable
         _mapper.Map(memberUpdateDto, user);
+        
+      //  user.DateOfBirth()
         _unitOfWork.UserRepository.Update(user);
         if (await _unitOfWork.Complete()) return NoContent();
         return BadRequest("Failed to update user");
