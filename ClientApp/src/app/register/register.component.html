@@ -11,19 +11,21 @@
                 <input type="radio" value='female' formControlName='gender' class="ml-3">Female
             </label>
             <!-- memer Or contestant -->
-            <label class="radio-inline">
-                <input type="radio" value='contestant' formControlName='knownAs'>Contestant
-            </label>
-            <label class="radio-inline">
-                <input type="radio" value='member' formControlName='knownAs' class="ml-3">Member
-            </label>
+            <div *ngIf="showMemberRadio">
+                <label class="radio-inline">
+                    <input type="radio" value='contestant' formControlName='knownAs'>Contestant
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" value='member' formControlName='knownAs' class="ml-3">Member
+                </label>
+            </div>
         </div>
         <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'>
         </app-text-input>
-       
+
         <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date Of Birth"'
             [maxDate]="maxDate">
-        </app-date-input>        
+        </app-date-input>
 
         <app-text-input [formControl]='registerForm.controls["mobile"]' [label]='"Mobile"'>
         </app-text-input>
@@ -44,10 +46,11 @@
         </div>
 
         <div class="form-group text-center mt-2">
-            <button [disabled]='!registerForm.valid' class="btn btn-sm btn-success form-control" type="submit">Register</button>
+            <button [disabled]='!registerForm.valid' class="btn btn-sm btn-success form-control"
+                type="submit">Register</button>
             <button class="btn btn-sm btn-info form-control mt-2" (click)="cancle()">Cancel</button>
         </div>
 
     </form>
-    
+
 </div>

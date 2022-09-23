@@ -26,19 +26,28 @@ namespace API.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            
+            // builder.Entity<AppUser>()
+            //     .Property(e => e.Created)
+            //     .HasConversion(e => e.ToUniversalTime(), e => DateTime.SpecifyKind(e, DateTimeKind.Utc));
 
-            builder.Entity<AppUser>()
+            //     builder.Entity<AppUser>()
+            //     .Property(e => e.LastActive)
+            //     .HasConversion(e => e.ToUniversalTime(), e => DateTime.SpecifyKind(e, DateTimeKind.Utc));
+
+            builder.Entity<AppUser>()                
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
+                
 
             builder.Entity<AppRole>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
-
+        
 
             builder.Entity<UserLike>()
             .HasKey(k => new { k.SourceUserId, k.LikedUserId });

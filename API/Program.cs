@@ -13,7 +13,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    // app.UseDeveloperExceptionPage();
+     app.UseDeveloperExceptionPage();
     // app.UseSwagger();
     //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIv6 v1"));
 }
@@ -37,7 +37,9 @@ app.MapControllers();
 app.MapFallbackToController("Index", "Fallback");
 // app.MapHub<PresecceHub>("hubs/presence");
 //app.MapHub<MesasgeHub>("hubs/message");
-//AppContext.SetSwitch("Ngpsql.EnabledLegasyTimestampBehavior",true);
+
+// AppContext.SetSwitch("Ngpsql.EnabledLegasyTimestampBehavior",true);
+
 //var host = CreateHostbuilder(args).Build();
 using var scope = app.Services.CreateScope();
 var Services = scope.ServiceProvider;
