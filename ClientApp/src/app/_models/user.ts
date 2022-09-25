@@ -7,3 +7,8 @@ export interface User{
     isActive:boolean;
     roles:string[];
 }
+
+export interface OTP{
+    mobile:string;
+    otp:string;
+}

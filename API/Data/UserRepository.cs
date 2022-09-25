@@ -108,5 +108,12 @@ namespace API.Data
             .ProjectTo<AppUserDto>(_mapper.ConfigurationProvider)
             .ToListAsync();            
         }
+
+        public async Task<string> GetUserByMobile(string mobile)
+        {
+            return await _context.Users                
+                .Where(x => x.PhoneNumber == mobile)
+                .Select(x => x.PhoneNumber).FirstOrDefaultAsync();
+        }
     }
 }

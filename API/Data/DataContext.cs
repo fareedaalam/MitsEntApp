@@ -23,10 +23,12 @@ namespace API.Data
         public DbSet<UserLike> Likes { get; set; }
         public DbSet<Message> Messages { get; set; }
 
+         public DbSet<Otps> Otps { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            
+
             // builder.Entity<AppUser>()
             //     .Property(e => e.Created)
             //     .HasConversion(e => e.ToUniversalTime(), e => DateTime.SpecifyKind(e, DateTimeKind.Utc));
@@ -34,29 +36,32 @@ namespace API.Data
             //     builder.Entity<AppUser>()
             //     .Property(e => e.LastActive)
             //     .HasConversion(e => e.ToUniversalTime(), e => DateTime.SpecifyKind(e, DateTimeKind.Utc));
+            
 
-            builder.Entity<AppUser>()                
+            builder.Entity<AppUser>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
                 .IsRequired();
-                
+
 
             builder.Entity<AppRole>()
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
-        
+
 
             builder.Entity<UserLike>()
             .HasKey(k => new { k.SourceUserId, k.LikedUserId });
+
             //set Relationship
             builder.Entity<UserLike>()
                 .HasOne(s => s.SourceUser)
                 .WithMany(l => l.LikedUsers)
                 .HasForeignKey(s => s.SourceUserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
             /***Note if you will use SQL server then you need to set the DeleteBehavior.NoAction
              otherwise you will get error***/
 
@@ -66,22 +71,25 @@ namespace API.Data
                .HasForeignKey(s => s.LikedUserId)
                .OnDelete(DeleteBehavior.Cascade);
 
+
             builder.Entity<Message>()
                 .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesReceived) //reciver has many msg received
                 .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.Entity<Message>()
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessagesSent)//sender has many msg sent
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+            builder.Entity<Otps>()
+                .HasKey(u => u.Id);
+
             builder.ApplyUtcDateTimeConverter();
 
-
-
         }
-
 
     }
 

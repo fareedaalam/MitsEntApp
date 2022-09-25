@@ -18,6 +18,12 @@ namespace API.Data
 
         }
 
+        public IOtpRepository OtpRepository
+        {
+            get => new OtpRepository(_context,_mapper);
+            set => new OtpRepository(_context,_mapper);
+        }
+
         // public IUserRepository UserRepository => new UserRepository(_context,_mapper);
         // public IMessageRepository MessageRepository => new MessageRepository(_context,_mapper);
         //  public ILikesRepository LikesRepository => new LikeRepositoty(_context);
@@ -37,6 +43,12 @@ namespace API.Data
             get => new LikeRepositoty(_context);
             set => new LikeRepositoty(_context);
         }
+
+        //  IOtpRepository IUnitOfWork.OtpRepository
+        // {
+        //     get => new OtpRepository(_context);
+        //     set => new OtpRepository(_context);
+        // }
 
         public async Task<bool> Complete()
         {

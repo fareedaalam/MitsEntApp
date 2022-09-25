@@ -21,5 +21,7 @@ namespace API.Interfaces
         void DeActivateUser(AppUser user);
         Task<IEnumerable<AppUserDto>> GetUserByKnownAs(UserParams userParam);
 
+        Task<string> GetUserByMobile(string mobile);
+
     }
 }

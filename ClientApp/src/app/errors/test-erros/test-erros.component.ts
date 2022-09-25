@@ -50,5 +50,12 @@ export class TestErrosComponent implements OnInit {
       }
     });
   }
+  get201Accepted(){
+    this.http.get(this.baseUrl + 'buggy/Accepted').subscribe({
+      next: resp => { console.log(resp) },
+      error: error => { console.log(error) }
+    });
+
+  }
 
 }

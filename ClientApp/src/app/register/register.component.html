@@ -1,7 +1,23 @@
 <div class="container">
-    <form [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
-        <h2 class="text-center text-primary">Sign up</h2>
-        <hr>
+    <h2 class="text-center text-primary">Sign up</h2>
+    <hr>
+    <form *ngIf="!showOtp" [formGroup]="otpForm" (ngSubmit)="otpForm.valid && sendOtp()" autocomplete="off">
+        <app-text-input [formControl]='otpForm.controls["mobile"]' [label]='"Mobile"'>
+        </app-text-input>
+        <app-text-input  *ngIf="txtOtp" [formControl]='otpForm.controls["otp"]' [label]='"OTP"'>
+        </app-text-input>
+        <p *ngIf="txtOtp" class="text text-info">OTP has been sent...</p>
+        <div class="form-group text-center mt-2">
+            <button [disabled]='!otpForm.valid' class="btn btn-sm btn-success form-control"
+                type="submit">      Submit          
+               <!-- <span> {{txtOtp ? 'Send Again' : 'Submit'}} </span> -->
+            </button>
+        </div>
+        <!-- <p>{{this.otpForm.valid}}</p> -->
+    </form>
+
+    <form *ngIf="showOtp" [formGroup]="registerForm" (ngSubmit)="registerForm.valid && register()" autocomplete="off">
+
         <div class="form-group">
             <label class="control-label" style="margin-right:10px;">I am a:</label>
             <label class="radio-inline">
@@ -23,12 +39,12 @@
         <app-text-input [formControl]='registerForm.controls["username"]' [label]='"Username"'>
         </app-text-input>
 
-        <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date Of Birth"'
+        <!-- <app-date-input [formControl]='registerForm.controls["dateOfBirth"]' [label]='"Date Of Birth"'
             [maxDate]="maxDate">
-        </app-date-input>
+        </app-date-input> -->
 
-        <app-text-input [formControl]='registerForm.controls["mobile"]' [label]='"Mobile"'>
-        </app-text-input>
+        <!-- <app-text-input [formControl]='registerForm.controls["mobile"]' [label]='"Mobile"'>
+        </app-text-input> -->
 
         <app-text-input [formControl]='registerForm.controls["password"]' [label]='"Password"' [type]='"password"'>
         </app-text-input>

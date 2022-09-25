@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
@@ -14,11 +14,15 @@ import { AccountService } from '../_services/account-service';
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   user: User;
-  //contestant = true;
   registerForm: FormGroup;
+  otpForm: FormGroup;
   showMemberRadio = false;
   maxDate: Date;
   validationErrors: string[] = [];
+
+  showOtp = false;
+  txtOtp = false;
+
 
   constructor(private accountServices: AccountService, private toastr: ToastrService,
     private fb: FormBuilder, private router: Router) {
@@ -40,8 +44,6 @@ export class RegisterComponent implements OnInit {
         this.showMemberRadio = !this.showMemberRadio;
       }
     }
-
-
   }
 
   initializeForm() {
@@ -49,10 +51,7 @@ export class RegisterComponent implements OnInit {
       gender: ['male'],
       username: ['', Validators.required],
       knownAs: ['member', Validators.required],
-      dateOfBirth: ['', Validators.required],
-      //city: ['', Validators.required],
-      //country: ['', Validators.required],
-      //email: ['', Validators.email],
+      // dateOfBirth: ['', Validators.required],
       mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       password: ['', [Validators.required,
       Validators.minLength(4),
@@ -60,10 +59,16 @@ export class RegisterComponent implements OnInit {
       ],
 
       confirmPassword: ['', [Validators.required, this.matchValues('password')]]
-    })
+    });
+
     this.registerForm.controls.password.valueChanges.subscribe(() => {
       this.registerForm.controls.confirmPassword.updateValueAndValidity();
-    })
+    });
+
+    this.otpForm = this.fb.group({
+      mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      otp: [''],
+    });
   }
 
   matchValues(matchTo: string): ValidatorFn {
@@ -77,16 +82,52 @@ export class RegisterComponent implements OnInit {
     this.accountServices.register(this.registerForm.value).subscribe({
       next: responce => { this.router.navigateByUrl('/contestant'); },
       error: error => {
-        this.validationErrors = error;
-        // console.log(error);  
+        console.log(error);
+        this.toastr.error(error.error)
+
+        if (typeof (error.error) === 'object') {
+          const modelStateErrors = [];
+          for (const key in error.error) {
+            if (error.error[key]) {
+              modelStateErrors.push(error.error[key].code)
+            }
+            console.log(modelStateErrors);
+            console.log(modelStateErrors.flat());
+          }}
+        //this.validationErrors = array;
       }
+
     })
   }
 
+  sendOtp() {
+    const mobile = this.otpForm.get('mobile').value;
+    this.txtOtp = true;
+    if (this.otpForm.valid && this.otpForm.get('otp').value != '') {
+      this.accountServices.VerifyOtp(this.otpForm.value).subscribe({
+        next: next => {
+          // console.log(next);
+          this.showOtp = true;
+          this.otpForm.reset();
+        }
+      });
+    } else {
+      this.accountServices.sendOtp(mobile).subscribe({
+        next: resp => {
+          this.registerForm.patchValue({ mobile: mobile });
+
+        },
+        error: err => {
+          console.log(err);
+        }
+      })
+
+    }
+
+  }
 
   cancle() {
     this.cancelRegister.emit(false);
-    //console.log('cancle');
   }
 
 }

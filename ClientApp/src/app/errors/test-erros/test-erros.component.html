@@ -5,6 +5,7 @@
     <button (click)="get404Error()" class="btn btn-outline-primary mr-3"> Test 404 error</button>
     <button (click)="get400ValidationError()" class="btn btn-outline-primary mr-3"> 
         Test 400 Validation error</button>
+    <button (click)="get201Accepted()" class="btn btn-outline-primary mr-3"> Test 201 error</button>
 
     <div class="row mt-5" *ngIf="validationErrors.length>0">
         <ul class="text-danger">

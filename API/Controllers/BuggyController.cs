@@ -34,7 +34,14 @@ public class BuggyController : BaseApiController
     [HttpGet("bad-request")]
     public ActionResult<string> GetBadRequest()
     {
-        return BadRequest("Bad Request");
+        return BadRequest("This is Bad Request");
+
+    }
+
+    [HttpGet("accepted")]
+    public ActionResult<string> GetAccepted()
+    {
+        return Accepted("Bad Request");
 
     }
 

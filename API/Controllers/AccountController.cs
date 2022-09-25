@@ -24,10 +24,12 @@ public class AccountController : BaseApiController
 
         if (await UserExists(registerDto.UserName)) return BadRequest("User Already Taken");
         var user = _mapper.Map<AppUser>(registerDto);
-        //user.
-
+        
         int RegistrationCount = _userManager.Users.Count(x => x.KnownAs == "contestant");
         if (RegistrationCount >= userParams.RegistrationCount ) return BadRequest("Registration is over!");
+
+        var mobileExists = _userManager.Users.AnyAsync(m=>m.Mobile==registerDto.Mobile);
+        if(mobileExists != null) return BadRequest("Mobile number already registerd");
 
         // using var hmac = new HMACSHA512();
         //Create a user hasing 
@@ -52,7 +54,6 @@ public class AccountController : BaseApiController
             //PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
             KnownAs = user.KnownAs,
             Gender = user.Gender
-
         };
 
     }
