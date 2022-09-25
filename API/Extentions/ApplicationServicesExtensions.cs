@@ -32,15 +32,18 @@ namespace API.Extentions
 
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                string connStr;
+                string connStr=null;
 
-                // Depending on if in development or production, use either Heroku-provided
+                /*** Depending on if in development or production, use either Heroku-provided
                 // connection string, or development connection string from env var.
+                ***/
+
                 if (env == "Development")
                 {
                     // Use connection string from file.
                     connStr = config.GetConnectionString("DefaultConnection");
                 }
+                
                 else
                 {
                     // Use connection string provided at runtime by Heroku.
@@ -60,9 +63,20 @@ namespace API.Extentions
                     connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
                 }
 
-                // Whether the connection string came from the local development configuration file
+                /***
+                 Whether the connection string came from the local development configuration file
                 // or from the environment variable from Heroku, use it to set up your DbContext.
+                ***/
+                //for Postgrase
                 options.UseNpgsql(connStr);
+
+            //     //for MYSQL
+            //     var serverVersion = new MySqlServerVersion(new Version(5, 7, 23));
+            //     connStr = config.GetConnectionString("DefaultConnection");
+                //Pamelo Mysql
+            //     options.UseMySql(connStr,serverVersion);
+            //    // options.UseMySQL(connStr);(connStr);
+
             });
 
 

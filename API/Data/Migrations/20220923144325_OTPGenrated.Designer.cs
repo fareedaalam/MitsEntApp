@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220918070957_PostgresInital")]
-    partial class PostgresInital
+    [Migration("20220923144325_OTPGenrated")]
+    partial class OTPGenrated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -75,10 +75,10 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -96,11 +96,14 @@ namespace API.Data.Migrations
                     b.Property<string>("Introduction")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("KnownAs")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("LastActive")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -177,14 +180,13 @@ namespace API.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DateRead")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("MessageSent")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<bool>("RecipientDeleted")
                         .HasColumnType("boolean");
@@ -193,7 +195,6 @@ namespace API.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("RecipientUsername")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("SenderDeleted")
@@ -203,7 +204,6 @@ namespace API.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("SenderUserName")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -213,6 +213,22 @@ namespace API.Data.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("API.Entities.Otps", b =>
+                {
+                    b.Property<string>("Mobile")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("OTP")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Mobile");
+
+                    b.ToTable("Otps");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>
@@ -233,7 +249,6 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Url")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

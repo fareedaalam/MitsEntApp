@@ -4,5 +4,11 @@ export interface User{
     photoUrl:string;
     knownAs:string;
     gender:string;
+    isActive:boolean;
     roles:string[];
+}
+
+export interface OTP{
+    mobile:string;
+    otp:string;
 }

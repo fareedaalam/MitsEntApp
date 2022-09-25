@@ -20,6 +20,7 @@ namespace API.Entities
         public string? Country { get; set; }
         public string? Email { get; set; }
         public string? Mobile { get; set; }
+        public bool IsActive { get; set; } = true;
         public ICollection<Photo>? Photos { get; set; }
         public ICollection<UserLike>? LikedByUsers { get; set; }
         public ICollection<UserLike>? LikedUsers { get; set; }
@@ -27,7 +28,9 @@ namespace API.Entities
         public ICollection<Message>? MessagesSent { get; set; }
         public ICollection<Message>? MessagesReceived { get; set; }
 
-         public ICollection<AppUserRole> UserRoles { get; set; }
+        public ICollection<AppUserRole> UserRoles { get; set; }
+
+       // public ICollection<Otps> OtpsSent { get; set; }
 
     }
 }

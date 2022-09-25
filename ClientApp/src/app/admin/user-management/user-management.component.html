@@ -2,12 +2,21 @@
     <table class="table">
         <tr>
             <td style="width: 30%;">Username</td>
+            <td style="width: 30%;">Roles</td>
             <td style="width: 30%;">Active</td>
             <td style="width: 30%;"></td>
         </tr>
         <tr *ngFor="let user of users">
             <td>{{user.username}}</td>
             <td>{{user.roles}}</td>
+            <td>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" [checked]="user.isActive" value={{user.username}}
+                    [disabled]="user.username ==='Admin' || user.username === 'admin' "                  
+                    (change)="onCheckboxChange($event)">
+                </div>
+                
+            </td>            
             <td><button (click)="openRolesModal(user)" class="btn btn-info active">Edit Roles</button> </td>
         </tr>
     </table>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import { Router, UrlSerializer } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -26,7 +26,7 @@ export class NavComponent implements OnInit {
   login() {
     this.accountService.login(this.model).subscribe({
       next: responce => {
-        this.router.navigateByUrl('/members');
+        this.router.navigateByUrl('/contestant');
       },
       error: error => {        
        // this.toastr.error(error.message);

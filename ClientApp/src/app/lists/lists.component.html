@@ -1,15 +1,18 @@
 <div class="text-center mt-3">
-    <h2>{{predicate ==='liked' ? 'Member I voted' : 'Member who voted me'}}</h2>
+    <p>{{predicate ==='liked' ? 'Member I voted:' : 'Member who voted me:'}}
+    <strong class="fs-3 text-primary">{{pagination.totalItems}}</strong>
+    </p>
+        
 </div>
 
 
 <div class="container mt-3">
     <div class="row">
         <div class="btn-group" name="predicate">
-            <button class="btn btn-primary" btnRadio="liked" 
-                [(ngModel)]="predicate" (click)="loadLikes()">My Votes</button>
-            <button class="btn btn-primary" btnRadio="likedBy" 
-                [(ngModel)]="predicate" (click)="loadLikes()">Who Voted me</button>
+            <button class="btn btn-primary" btnRadio="liked" [(ngModel)]="predicate" (click)="loadLikes()">My
+                Votes</button>
+            <button class="btn btn-primary" btnRadio="likedBy" [(ngModel)]="predicate" (click)="loadLikes()">Who Voted
+                me</button>
         </div>
     </div>
     <div class="row mt-3">
@@ -23,7 +26,7 @@
 <!-- For paginations -->
 <div class="d-flex justify-content-center" *ngIf="pagination">
     <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
-      [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;" nextText="&rsaquo;"
-      firstText="&laquo;" lastText="&raquo;">
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
-  </div>
+</div>

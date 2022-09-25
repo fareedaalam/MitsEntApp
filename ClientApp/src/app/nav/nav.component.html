@@ -7,15 +7,18 @@
         </a>
 
         <ul class="navbar-nav me-auto">
-            <ng-container *ngIf="accountService.currentUser$ |async">               
+            <ng-container *ngIf="accountService.currentUser$ | async">               
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
+                    <a class="nav-link" routerLink="/members" routerLinkActive="active">Search</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/list" routerLinkActive="active">Lists</a>
+                    <a class="nav-link" routerLink="/list" routerLinkActive="active">Votes</a>
                 </li>
                 <!-- <li class="nav-item">
                     <a class="nav-link" routerLink="/message" routerLinkActive="active">Messages</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                    <a class="nav-link" routerLink="/message" routerLinkActive="active">Signup</a>
                 </li> -->
                 <li *appHasRole='["Admin","Moderator"]' class="nav-item">
                     <a class="nav-link" routerLink="/admin" routerLinkActive="active">Admin</a>
@@ -23,7 +26,7 @@
                
             </ng-container>
             <li class="nav-item">
-                <!-- <a class="nav-link" routerLink="/contestant" routerLinkActive="active">Contestant</a> -->
+                <a class="nav-link" routerLink="/contestant" routerLinkActive="active">Contestant</a>
             </li>
             <li class="nav-item">
                 <!-- <a class="nav-link" routerLink="/errors" routerLinkActive="active">Errors</a> -->
@@ -33,22 +36,22 @@
 
         <div class="dropdown" *ngIf="(accountService.currentUser$ |async) as user" dropdown>            
             <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}">
-            <a class="dropdown-toggle text-light" dropdownToggle> Welocome {{ user.username || user.knownAs | titlecase}}</a>
+            <a class="dropdown-toggle text-light ms-2 text-decoration-none" dropdownToggle> Welocome {{ user.username || user.knownAs | titlecase}}</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
                 <a class="dropdown-item" routerLink="/member/edit">Edit Profile</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" (click)="logout()">Logout</a>
             </div>
         </div>
-        <form *ngIf="(accountService.currentUser$| async)===null" #loginForm="ngForm" class="form-inline "
+        <form *ngIf="(accountService.currentUser$| async)===null" #loginForm="ngForm" class="d-flex"
             (ngSubmit)="login()" autocomplete="off">
             <div class="row">
                 <div class="col-md-3">
-                    <input name="username" [(ngModel)]="model.username" class="form-control mr-sm-2" type="text"
+                    <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"
                         placeholder="Username">
                 </div>
                 <div class="col-md-3">
-                    <input name="password" [(ngModel)]="model.password" class="form-control mr-sm-2" type="password"
+                    <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
                         placeholder="Password">
                 </div>
                 <div class="col-md-3">

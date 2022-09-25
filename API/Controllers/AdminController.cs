@@ -1,12 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using API.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Controllers
 {
@@ -30,12 +22,14 @@ namespace API.Controllers
              .Select(u => new
              {
                  u.Id,
-                 username=u.UserName,
+                 username = u.UserName,
+                 isActive = u.IsActive,
                  Roles = u.UserRoles.Select(r => r.Role.Name).ToList()
 
              }).ToListAsync();
             return Ok(users);
         }
+        
 
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
@@ -43,10 +37,10 @@ namespace API.Controllers
             var selectedRoles = roles.Split(",").ToArray();
             var user = await _userManager.FindByNameAsync(username);
 
-            if(user == null) return NotFound("Could not fond user");
+            if (user == null) return NotFound("Could not fond user");
 
             var userRoles = await _userManager.GetRolesAsync(user);
-            
+
             var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
             if (!result.Succeeded) return BadRequest("Failed to add to roles");
             result = await _userManager.RemoveFromRolesAsync(user, userRoles.Except(selectedRoles));
@@ -61,6 +55,21 @@ namespace API.Controllers
         public ActionResult GetPhotosForModeration()
         {
             return Ok("admin or moderate can see this");
+        }
+
+        [HttpPut("deactivate/{username}")]
+        public async Task<ActionResult> DeActivate(string username)
+        {
+
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null) return NotFound("User not found");
+
+            user.IsActive = user.IsActive == true ? false : true;
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded) return BadRequest("Failed to " + user.IsActive + "to roles");
+                     
+            return Ok(result);          
+
         }
 
     }

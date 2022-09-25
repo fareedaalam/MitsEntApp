@@ -7,9 +7,10 @@ namespace API.Interfaces
 {
     public interface IUnitOfWork
     {
-     public IUserRepository UserRepository { get; set; }
+        public IUserRepository UserRepository { get; set; }
         IMessageRepository MessageRepository { get; set; }
         ILikesRepository LikesRepository { get; set; }
+        IOtpRepository OtpRepository { get; set; }
         Task<bool> Complete();
         bool HasChanges();
     }
