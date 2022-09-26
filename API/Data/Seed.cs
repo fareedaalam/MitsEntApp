@@ -23,8 +23,12 @@ namespace API.Data
                 new AppRole{Name = "Moderator"},
             };
 
+            
+
             foreach (var role in roles)
             {
+                //check exists
+               
                 await roleManager.CreateAsync(role);
             }
 
@@ -35,6 +39,7 @@ namespace API.Data
                 // user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
                 // user.PasswordSalt = hmac.Key;
                 await userManager.CreateAsync(user, "Pa$$w0rd");
+               
                 await userManager.AddToRoleAsync(user, "Member");
 
             }

@@ -4,7 +4,7 @@
 
 namespace API.Data.Migrations
 {
-    public partial class OTPGenrated : Migration
+    public partial class heroku : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

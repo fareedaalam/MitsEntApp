@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Migrations
+namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220923043353_postG")]
-    partial class postG
+    [Migration("20220925114232_heroku")]
+    partial class heroku
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -213,6 +213,25 @@ namespace API.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("API.Entities.Otps", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OTP")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Otps");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>

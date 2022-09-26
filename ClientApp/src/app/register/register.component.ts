@@ -80,7 +80,16 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.accountServices.register(this.registerForm.value).subscribe({
-      next: responce => { this.router.navigateByUrl('/contestant'); },
+      next: responce => {
+        //console.log(responce, 'fade', this.user);
+
+        if (this.user.username === 'Admin' || this.user.username === 'admin') {
+          this.router.navigateByUrl('/register');
+        } else {
+          this.router.navigateByUrl('/contestant');
+        }
+
+      },
       error: error => {
         console.log(error);
         this.toastr.error(error.error)
@@ -93,7 +102,8 @@ export class RegisterComponent implements OnInit {
             }
             console.log(modelStateErrors);
             console.log(modelStateErrors.flat());
-          }}
+          }
+        }
         //this.validationErrors = array;
       }
 

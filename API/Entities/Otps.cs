@@ -10,7 +10,7 @@ namespace API.Entities
 
         public int Id { get; set; }
         public string OTP { get; set; }
-        //public AppUser User { get; set; }
+      //  public AppUser User { get; set; }
         public string Mobile { get; set; }
 
     }

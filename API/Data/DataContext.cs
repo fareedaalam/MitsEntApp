@@ -18,6 +18,7 @@ namespace API.Data
     {
         public DataContext(DbContextOptions options) : base(options)
         {
+            // this.Database.EnsureCreated();
         }
         //public DbSet<AppUser> Users { get; set; }
         public DbSet<UserLike> Likes { get; set; }
