@@ -43,20 +43,23 @@
                 <a class="dropdown-item" (click)="logout()">Logout</a>
             </div>
         </div>
-        <form *ngIf="(accountService.currentUser$| async)===null" #loginForm="ngForm" class="d-flex"
-            (ngSubmit)="login()" autocomplete="off">
+        <form *ngIf="(accountService.currentUser$| async)===null" class="d-flex"
+            [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" autocomplete="off">            
             <div class="row">
                 <div class="col-md-3">
-                    <input name="username" [(ngModel)]="model.username" class="form-control me-sm-2" type="text"
+                    <input name="username" [formControl]='loginForm.controls["username"]' class="form-control me-sm-2" type="text"
                         placeholder="Username">
                 </div>
                 <div class="col-md-3">
-                    <input name="password" [(ngModel)]="model.password" class="form-control me-sm-2" type="password"
+                    <input name="password" [formControl]='loginForm.controls["password"]' class="form-control me-sm-2" type="password"
                         placeholder="Password">
                 </div>
                 <div class="col-md-3">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+                    <button class="btn btn-btn-primary btn-sm ml-2" type="submit">Login                    
+                </button>
+                <a class="btn btn-primary btn-sm ml-2" routerLink="/forgotpassword">Forgot Password</a>
                 </div>
+               
             </div>
         </form>
     </div>
