@@ -9,6 +9,7 @@ export interface User{
 }
 
 export interface OTP{
-    mobile:string;
+    username:string;
+    phonenumber:string;
     otp:string;
 }

@@ -19,7 +19,7 @@ namespace API.Entities
         public string? City { get; set; }
         public string? Country { get; set; }
         public string? Email { get; set; }
-        public string? Mobile { get; set; }
+        public string? PhoneNumber { get; set; }
         public bool IsActive { get; set; } = true;
         public ICollection<Photo>? Photos { get; set; }
         public ICollection<UserLike>? LikedByUsers { get; set; }

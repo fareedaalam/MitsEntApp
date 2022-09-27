@@ -86,7 +86,7 @@ namespace API.Data
 
 
             builder.Entity<Otps>()
-                .HasKey(u => u.Id);
+                .HasKey(u => u.Mobile);
 
             builder.ApplyUtcDateTimeConverter();
 

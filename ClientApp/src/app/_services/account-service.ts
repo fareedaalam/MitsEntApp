@@ -75,8 +75,8 @@ export class AccountService {
     return JSON.parse(atob(token.split('.')[1]))
   }
 
-  sendOtp(mobile: string) {
-    return this.http.post(this.baseUrl + 'otp/sendotp/' + mobile, {});
+  savesendOtp(mobile: string) {
+    return this.http.post(this.baseUrl + 'otp/savesendotp/' + mobile, {});
     // .pipe( 
     //   map((res: any) => {
     //       console.log(res);
@@ -88,8 +88,16 @@ export class AccountService {
     //   }));
   }
 
-  VerifyOtp(model: OTP) {
-    return this.http.post(this.baseUrl + 'otp/verifyotp', model);
+  sendOtp(phonenumber: string) {
+    return this.http.post(this.baseUrl + 'otp/sendotp/' + phonenumber, {});    
+  }
+
+  VerifyOtp(phonenumber: OTP) {
+    return this.http.post(this.baseUrl + 'otp/verifyotp', phonenumber);
+  }
+
+  VerifyForgotPwd(model: OTP) {
+    return this.http.post(this.baseUrl + 'otp/forgot-pwd', model);
   }
 
 }

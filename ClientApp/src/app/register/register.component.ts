@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit {
       username: ['', Validators.required],
       knownAs: ['member', Validators.required],
       // dateOfBirth: ['', Validators.required],
-      mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phonenumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       password: ['', [Validators.required,
       Validators.minLength(4),
       Validators.maxLength(28)],
@@ -66,7 +66,7 @@ export class RegisterComponent implements OnInit {
     });
 
     this.otpForm = this.fb.group({
-      mobile: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phonenumber: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       otp: [''],
     });
   }
@@ -81,7 +81,7 @@ export class RegisterComponent implements OnInit {
   register() {
     this.accountServices.register(this.registerForm.value).subscribe({
       next: responce => {
-        //console.log(responce, 'fade', this.user);
+        
 
         if (this.user.username === 'Admin' || this.user.username === 'admin') {
           this.router.navigateByUrl('/register');
@@ -93,17 +93,6 @@ export class RegisterComponent implements OnInit {
       error: error => {
         console.log(error);
         this.toastr.error(error.error)
-
-        if (typeof (error.error) === 'object') {
-          const modelStateErrors = [];
-          for (const key in error.error) {
-            if (error.error[key]) {
-              modelStateErrors.push(error.error[key].code)
-            }
-            console.log(modelStateErrors);
-            console.log(modelStateErrors.flat());
-          }
-        }
         //this.validationErrors = array;
       }
 
@@ -111,8 +100,10 @@ export class RegisterComponent implements OnInit {
   }
 
   sendOtp() {
-    const mobile = this.otpForm.get('mobile').value;
-    this.txtOtp = true;
+    const mobile = this.otpForm.get('phonenumber').value;
+    this.registerForm.patchValue({ phonenumber: mobile });
+    this.txtOtp = true;    
+
     if (this.otpForm.valid && this.otpForm.get('otp').value != '') {
       this.accountServices.VerifyOtp(this.otpForm.value).subscribe({
         next: next => {
@@ -122,9 +113,12 @@ export class RegisterComponent implements OnInit {
         }
       });
     } else {
+      //save and send otp check while user already register
       this.accountServices.sendOtp(mobile).subscribe({
         next: resp => {
-          this.registerForm.patchValue({ mobile: mobile });
+         
+
+         // console.log(resp);
 
         },
         error: err => {

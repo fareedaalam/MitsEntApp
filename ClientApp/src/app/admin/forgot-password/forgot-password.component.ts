@@ -10,7 +10,9 @@ import { AccountService } from 'src/app/_services/account-service';
   styleUrls: ['./forgot-password.component.css']
 })
 export class ForgotPasswordComponent implements OnInit {
- // user: User;
+  forgotpwdPanel = false;
+
+
   forgotForm: FormGroup;
   txtOtp = false;
   showOtp = false;
@@ -34,18 +36,19 @@ export class ForgotPasswordComponent implements OnInit {
     const mobile = this.forgotForm.get('mobile').value;
     this.txtOtp = true;
     if (this.forgotForm.valid && this.forgotForm.get('otp').value != '') {
-      this.accountServices.VerifyOtp(this.forgotForm.value).subscribe({
+      this.accountServices.VerifyForgotPwd(this.forgotForm.value).subscribe({
         next: next => {
-          // console.log(next);
           this.showOtp = true;
-         // this.forgotForm.reset();
+          this.forgotpwdPanel = true;
+          
+         // console.log(next);
+
         }
       });
     } else {
       this.accountServices.sendOtp(mobile).subscribe({
         next: resp => {
-          console.log(resp);
-         // this.registerForm.patchValue({ mobile: mobile });
+        // console.log(resp);
 
         },
         error: err => {

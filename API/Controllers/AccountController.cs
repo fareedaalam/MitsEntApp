@@ -28,7 +28,7 @@ public class AccountController : BaseApiController
         int RegistrationCount = _userManager.Users.Count(x => x.KnownAs == "contestant");
         if (RegistrationCount >= userParams.RegistrationCount) return BadRequest("Registration is over!");
               
-        if (await MobileExists(registerDto.Mobile)) return BadRequest("Mobile number already registerd");
+        if (await MobileExists(registerDto.PhoneNumber)) return BadRequest("Mobile number already registerd");
 
         // using var hmac = new HMACSHA512();
         //Create a user hasing 
@@ -100,6 +100,8 @@ public class AccountController : BaseApiController
         }
 
     }
+   
+   
     private async Task<bool> UserExists(String username)
     {
 
@@ -108,8 +110,9 @@ public class AccountController : BaseApiController
 
     private async Task<bool> MobileExists(String mobile)
     {
-        return await _userManager.Users.AnyAsync(m => m.Mobile.ToLower() == mobile.ToLower());
+        return await _userManager.Users.AnyAsync(m => m.PhoneNumber == mobile);
     }
+
 
 
 }
