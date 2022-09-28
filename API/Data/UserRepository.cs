@@ -86,6 +86,13 @@ namespace API.Data
                 .Select(x => x.Gender).FirstOrDefaultAsync();
         }
 
+        public async Task<string> GetUserMobile(string username)
+        {
+            return await _context.Users
+                .Where(x => x.UserName == username)
+                .Select(x => x.PhoneNumber).FirstOrDefaultAsync();
+        }
+
         public void Update(AppUser user)
         {
             _context.Entry(user).State = EntityState.Modified;

@@ -7,12 +7,12 @@ namespace API.Interfaces
 {
     public interface IOtpRepository
     {
+       // string SendOTP(SmsSettings smsSettings);
         void AddOtp(Otps otps);
         void DeleteOtp(Otps otps);
         Task<Otps> GetOtp(string mobile);
-        Task<OtpsDto> GetOtpAsync(string mobile);
-        Task<bool> VerifyOtp(OtpsDto otp);
-
+        Task<OtpDto> GetOtpAsync(string mobile);
+        Task<bool> VerifyOtp(OtpDto otp);
         void Update(Otps user);
     }
 }

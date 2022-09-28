@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
 
 namespace API.Controllers
 {
@@ -10,14 +12,18 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public OtpController(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly ISmsService _smsService;
+
+        public OtpController(IUnitOfWork unitOfWork, IMapper mapper, ISmsService smsService)
         {
+            _smsService = smsService;
             _mapper = mapper;
             _unitOfWork = unitOfWork;
+
         }
 
-
-        [HttpPost("sendotp/{mobile}")]
+        //depricated 
+        [HttpPost("savesendotp/{mobile}")]
         public async Task<ActionResult> SendSaveOtp(string mobile)
         {
             if (!String.IsNullOrEmpty(mobile))
@@ -34,14 +40,61 @@ namespace API.Controllers
                 };
 
                 var mobileExists = await _unitOfWork.OtpRepository.GetOtpAsync(mobile);
-                
-                if (mobileExists != null) return Ok(new OtpsDto{mobile=mobile});
 
-                _unitOfWork.OtpRepository.AddOtp(data);
+                // if (mobileExists != null) return Ok(new OtpDto { mobile = mobile });
 
-                if (await _unitOfWork.Complete()) return Ok(new OtpsDto{mobile=mobile});
+                // var mobileExists = await _unitOfWork.OtpRepository.GetOtpAsync(mobile);
+
+                //send sms...
+                var sms = await _smsService.SendSms(data.Mobile, data.OTP);
+
+                if (mobileExists == null)
+                {   //add OTP into DB
+                    _unitOfWork.OtpRepository.AddOtp(data);
+                    await _unitOfWork.Complete();
+
+                }
+                else
+                { //update db
+                    _unitOfWork.OtpRepository.Update(data);
+                }
+                return Ok(mobile);
             }
 
+            return BadRequest("Faild to send OTP");
+
+        }
+
+        [HttpPost("sendotp/{mobile}")]
+        public async Task<ActionResult> SendOtp(string mobile)
+        {
+            if (!String.IsNullOrEmpty(mobile))
+            {
+                var data = new Otps
+                {
+                    Mobile = mobile,
+                    OTP = mobile.GenrateOTP()
+                };
+
+
+                var mobileExists = await _unitOfWork.OtpRepository.GetOtpAsync(mobile);
+
+                //Database operations...
+                if (mobileExists == null)
+                {   //Insert
+                    _unitOfWork.OtpRepository.AddOtp(data);
+                    await _unitOfWork.Complete();
+
+                }
+                else
+                { //Update
+                    _unitOfWork.OtpRepository.Update(data);
+                }
+                //send sms...
+                var sms = await _smsService.SendSms(data.Mobile, data.OTP);
+                return Ok(new OtpDto { phonenumber = mobile });
+
+            }
 
             return BadRequest("Faild to send OTP");
 
@@ -57,11 +110,21 @@ namespace API.Controllers
         }
 
         [HttpPost("verifyotp")]
-        public async Task<ActionResult> VarifyOtp(OtpsDto otp)
+        public async Task<ActionResult> VerifyOtp(OtpDto otp)
         {
             var result = await _unitOfWork.OtpRepository.VerifyOtp(otp);
             if (!result) return BadRequest("OTP Not Valid");
-            return Ok(otp);
+            var delOtp = new Otps
+            {
+                OTP = otp.otp,
+                Mobile = otp.phonenumber
+            };
+
+            _unitOfWork.OtpRepository.DeleteOtp(delOtp);
+
+            if (await _unitOfWork.Complete()) return Ok(otp);
+
+            return BadRequest("Something wrong to wipe OTP");
 
         }
 
@@ -74,6 +137,33 @@ namespace API.Controllers
             if (await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Somethig wrong");
+        }
+
+        [HttpPost("forgot-pwd")]
+        public async Task<ActionResult> ForgotPassword(ForgotPwdDto forgotPwdDto)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(forgotPwdDto.username.ToLower());
+            if (user == null)
+            {
+                return BadRequest("User not valid");
+            }
+            else
+            {
+                var mobile = await _unitOfWork.UserRepository.GetUserMobile(user.UserName);
+                if (mobile == null) return BadRequest("Mobile number not registered");
+            }
+
+            var otp = new OtpDto
+            {
+                phonenumber = forgotPwdDto.mobile,
+                otp = forgotPwdDto.otp
+            };
+
+            var result = await _unitOfWork.OtpRepository.VerifyOtp(otp);
+            if (!result) return BadRequest("Not Valid");
+
+            return Ok(forgotPwdDto);
+
         }
 
 

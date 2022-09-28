@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace API.Migrations
+namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220923043353_postG")]
-    partial class postG
+    [Migration("20220927130445_setMobilePrimary")]
+    partial class setMobilePrimary
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -114,9 +114,6 @@ namespace API.Migrations
                     b.Property<string>("LookingFor")
                         .HasColumnType("text");
 
-                    b.Property<string>("Mobile")
-                        .HasColumnType("text");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -213,6 +210,19 @@ namespace API.Migrations
                     b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("API.Entities.Otps", b =>
+                {
+                    b.Property<string>("Mobile")
+                        .HasColumnType("text");
+
+                    b.Property<string>("OTP")
+                        .HasColumnType("text");
+
+                    b.HasKey("Mobile");
+
+                    b.ToTable("Otps");
                 });
 
             modelBuilder.Entity("API.Entities.Photo", b =>

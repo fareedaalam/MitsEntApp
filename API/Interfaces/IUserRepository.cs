@@ -18,6 +18,7 @@ namespace API.Interfaces
         Task<PagedList<AppUserDto>> GetMembersAsync(UserParams userParams);
         Task<AppUserDto> GetMemberAsync(string username);
         Task<string> GetUserGender(string username);
+         Task<string> GetUserMobile(string username);
         void DeActivateUser(AppUser user);
         Task<IEnumerable<AppUserDto>> GetUserByKnownAs(UserParams userParam);
 

@@ -2,7 +2,7 @@
     <h2 class="text-center text-primary">Sign up</h2>
     <hr>
     <form *ngIf="!showOtp" [formGroup]="otpForm" (ngSubmit)="otpForm.valid && sendOtp()" autocomplete="off">
-        <app-text-input [formControl]='otpForm.controls["mobile"]' [label]='"Mobile"'>
+        <app-text-input [formControl]='otpForm.controls["phonenumber"]' [label]='"Mobile"'>
         </app-text-input>
         <app-text-input  *ngIf="txtOtp" [formControl]='otpForm.controls["otp"]' [label]='"OTP"'>
         </app-text-input>
@@ -60,6 +60,9 @@
                 </li>
             </ul>
         </div>
+         <!-- <p>{{this.registerForm.valid}}</p> -->
+         <span *ngIf="this.registerForm.valid"> <i class="fa fa-thumbs-up" style="color:green"></i> </span>
+         <span *ngIf="!this.registerForm.valid"> <i class="fa fa-thumbs-down" style="color:red"></i> </span>
 
         <div class="form-group text-center mt-2">
             <button [disabled]='!registerForm.valid' class="btn btn-sm btn-success form-control"

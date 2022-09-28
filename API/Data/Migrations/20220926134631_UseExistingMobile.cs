@@ -4,23 +4,22 @@
 
 namespace API.Data.Migrations
 {
-    public partial class OTPGenrated1 : Migration
+    public partial class UseExistingMobile : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "Id",
-                table: "Otps");
+                name: "Mobile",
+                table: "AspNetUsers");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Id",
-                table: "Otps",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<string>(
+                name: "Mobile",
+                table: "AspNetUsers",
+                type: "text",
+                nullable: true);
         }
     }
 }

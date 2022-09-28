@@ -24,7 +24,7 @@ public class LikesController : BaseApiController
 
         var UserLike = await _unitOfWork.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
 
-        if (UserLike != null) return BadRequest("You already like this user");
+        if (UserLike != null) return BadRequest("You already voted this user");
 
         UserLike = new UserLike
         {

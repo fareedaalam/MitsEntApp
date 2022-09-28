@@ -112,9 +112,6 @@ namespace API.Data.Migrations
                     b.Property<string>("LookingFor")
                         .HasColumnType("text");
 
-                    b.Property<string>("Mobile")
-                        .HasColumnType("text");
-
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -215,19 +212,13 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Otps", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
                     b.Property<string>("Mobile")
                         .HasColumnType("text");
 
                     b.Property<string>("OTP")
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
+                    b.HasKey("Mobile");
 
                     b.ToTable("Otps");
                 });

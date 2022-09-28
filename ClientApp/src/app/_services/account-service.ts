@@ -37,14 +37,17 @@ export class AccountService {
         if (user) {
           //localStorage.setItem('user', JSON.stringify(responce));
           //this.currentUserSource.next(user);
-          this.setCurrentUser(user);
+          
+          if(!localStorage.getItem('user'))
+              this.setCurrentUser(user);
+
         }
       })
       ,
       catchError((error) => {
         console.log('error caught in service')
-       // console.error(error.error);
-      //  this.toastr.error(error.error);
+        // console.error(error.error);
+        //  this.toastr.error(error.error);
 
         return throwError(() => new Error(error));
       })
@@ -57,9 +60,9 @@ export class AccountService {
     const role = this.getDecodedToken(user.token).role;
     //check multi roles array of single string role
     Array.isArray(role) ? user.roles = role : user.roles.push(role);
-
     localStorage.setItem('user', JSON.stringify(user));
     this.currentUserSource.next(user);
+
   }
 
   logout() {
@@ -72,8 +75,8 @@ export class AccountService {
     return JSON.parse(atob(token.split('.')[1]))
   }
 
-  sendOtp(mobile: string) {
-    return this.http.post(this.baseUrl + 'otp/sendotp/' + mobile, {});
+  savesendOtp(mobile: string) {
+    return this.http.post(this.baseUrl + 'otp/savesendotp/' + mobile, {});
     // .pipe( 
     //   map((res: any) => {
     //       console.log(res);
@@ -85,8 +88,16 @@ export class AccountService {
     //   }));
   }
 
-  VerifyOtp(model: OTP) {
-    return this.http.post(this.baseUrl + 'otp/verifyotp', model);
+  sendOtp(phonenumber: string) {
+    return this.http.post(this.baseUrl + 'otp/sendotp/' + phonenumber, {});    
+  }
+
+  VerifyOtp(phonenumber: OTP) {
+    return this.http.post(this.baseUrl + 'otp/verifyotp', phonenumber);
+  }
+
+  VerifyForgotPwd(model: OTP) {
+    return this.http.post(this.baseUrl + 'otp/forgot-pwd', model);
   }
 
 }

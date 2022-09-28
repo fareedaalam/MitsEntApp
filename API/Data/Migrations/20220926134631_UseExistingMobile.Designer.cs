@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220923144512_OTPGenrated1")]
-    partial class OTPGenrated1
+    [Migration("20220926134631_UseExistingMobile")]
+    partial class UseExistingMobile
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -112,9 +112,6 @@ namespace API.Data.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("LookingFor")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Mobile")
                         .HasColumnType("text");
 
                     b.Property<string>("NormalizedEmail")
@@ -217,13 +214,19 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Otps", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Mobile")
                         .HasColumnType("text");
 
-                    b.Property<int>("OTP")
-                        .HasColumnType("integer");
+                    b.Property<string>("OTP")
+                        .HasColumnType("text");
 
-                    b.HasKey("Mobile");
+                    b.HasKey("Id");
 
                     b.ToTable("Otps");
                 });

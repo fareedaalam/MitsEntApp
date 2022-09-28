@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using Microsoft.Extensions.Options;
 
 namespace API.Data
 {
@@ -10,10 +13,12 @@ namespace API.Data
     {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
+
         public OtpRepository(DataContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
+
         }
 
         public void AddOtp(Otps otps)
@@ -27,19 +32,22 @@ namespace API.Data
         }
 
         public async Task<Otps> GetOtp(string mobile)
-        {
+         {
             return await _context.Otps
             .Where(x => x.Mobile == mobile)
             .FirstOrDefaultAsync();
+            //return await _context.Otps.FindAsync(mobile);
         }
 
-        public async Task<OtpsDto> GetOtpAsync(string mobile)
+        public async Task<OtpDto> GetOtpAsync(string mobile)
         {
             return await _context.Otps
                 .Where(x => x.Mobile == mobile)
-                .ProjectTo<OtpsDto>(_mapper.ConfigurationProvider)
+                .ProjectTo<OtpDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
         }
+
+
 
         public void Update(Otps user)
         {
@@ -47,11 +55,14 @@ namespace API.Data
             _context.SaveChanges();
         }
 
-        public async Task<bool> VerifyOtp(OtpsDto otp)
+        public async Task<bool> VerifyOtp(OtpDto otp)
         {
-            return await _context.Otps.AnyAsync(x => x.Mobile == otp.mobile && x.OTP == otp.otp);
+            return await _context.Otps.AnyAsync(x => x.Mobile == otp.phonenumber && x.OTP == otp.otp);
         }
 
+              
+        
 
+       
     }
 }

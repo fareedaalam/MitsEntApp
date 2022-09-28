@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220924123758_removeprimarykeyotp")]
-    partial class removeprimarykeyotp
+    [Migration("20220925114232_heroku")]
+    partial class heroku
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

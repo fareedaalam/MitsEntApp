@@ -5,9 +5,35 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace API.Data.Migrations
 {
-    public partial class removeprimarykeyotp : Migration
+    public partial class setMobilePrimary : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropPrimaryKey(
+                name: "PK_Otps",
+                table: "Otps");
+
+            migrationBuilder.DropColumn(
+                name: "Id",
+                table: "Otps");
+
+            migrationBuilder.AlterColumn<string>(
+                name: "Mobile",
+                table: "Otps",
+                type: "text",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "text",
+                oldNullable: true);
+
+            migrationBuilder.AddPrimaryKey(
+                name: "PK_Otps",
+                table: "Otps",
+                column: "Mobile");
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
                 name: "PK_Otps",
@@ -33,32 +59,6 @@ namespace API.Data.Migrations
                 name: "PK_Otps",
                 table: "Otps",
                 column: "Id");
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Otps",
-                table: "Otps");
-
-            migrationBuilder.DropColumn(
-                name: "Id",
-                table: "Otps");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Mobile",
-                table: "Otps",
-                type: "text",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "text",
-                oldNullable: true);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_Otps",
-                table: "Otps",
-                column: "Mobile");
         }
     }
 }

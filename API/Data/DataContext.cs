@@ -18,6 +18,7 @@ namespace API.Data
     {
         public DataContext(DbContextOptions options) : base(options)
         {
+            // this.Database.EnsureCreated();
         }
         //public DbSet<AppUser> Users { get; set; }
         public DbSet<UserLike> Likes { get; set; }
@@ -85,7 +86,7 @@ namespace API.Data
 
 
             builder.Entity<Otps>()
-                .HasKey(u => u.Id);
+                .HasKey(u => u.Mobile);
 
             builder.ApplyUtcDateTimeConverter();
 

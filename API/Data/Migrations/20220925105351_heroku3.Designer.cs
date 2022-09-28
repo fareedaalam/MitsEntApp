@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220923144325_OTPGenrated")]
-    partial class OTPGenrated
+    [Migration("20220925105351_heroku3")]
+    partial class heroku3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -217,16 +217,19 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Otps", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Mobile")
                         .HasColumnType("text");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
+                    b.Property<string>("OTP")
+                        .HasColumnType("text");
 
-                    b.Property<int>("OTP")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Mobile");
+                    b.HasKey("Id");
 
                     b.ToTable("Otps");
                 });

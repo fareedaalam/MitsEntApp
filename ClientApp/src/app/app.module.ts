@@ -36,6 +36,7 @@ import { PhotoManagementComponent } from './admin/photo-management/photo-managem
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { ContestantComponent } from './members/contestant/contestant.component';
+import { ForgotPasswordComponent } from './admin/forgot-password/forgot-password.component';
 
 
 
@@ -64,7 +65,8 @@ import { ContestantComponent } from './members/contestant/contestant.component';
     PhotoManagementComponent,
     RolesModalComponent,
     ConfirmDialogComponent,
-    ContestantComponent
+    ContestantComponent,
+    ForgotPasswordComponent
   ],
   imports: [
     BrowserModule,
