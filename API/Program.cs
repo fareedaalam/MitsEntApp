@@ -26,7 +26,9 @@ app.UseCors(x => x.AllowAnyHeader()
     .WithOrigins("http://localhost:4200",
     "https://localhost:4200",
     "https://web.postman.co",
-    "https://web.postman.co/"));
+    "https://web.postman.co","https://merajazba.com","http://merajazba.com")
+    .AllowCredentials())
+    ;
 app.UseAuthentication();
 app.UseAuthorization();
 //to use default and static file user basically agular 
