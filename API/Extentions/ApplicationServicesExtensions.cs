@@ -19,7 +19,7 @@ namespace API.Extentions
             //add token with full scope until application life 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
-              services.AddScoped<ISmsService, SmsService>();
+            services.AddScoped<ISmsService, SmsService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
@@ -34,19 +34,13 @@ namespace API.Extentions
 
                 var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                string connStr=null;
+                string connStr = null;
 
                 /*** Depending on if in development or production, use either Heroku-provided
                 // connection string, or development connection string from env var.
                 ***/
 
-                if (env == "Development")
-                {
-                    // Use connection string from file.
-                    connStr = config.GetConnectionString("DefaultConnection");
-                }
-                
-                else
+                if (env == "heroku")
                 {
                     // Use connection string provided at runtime by Heroku.
                     var connUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
@@ -64,6 +58,11 @@ namespace API.Extentions
 
                     connStr = $"Server={pgHost};Port={pgPort};User Id={pgUser};Password={pgPass};Database={pgDb};SSL Mode=Require;TrustServerCertificate=True";
                 }
+                else
+                {
+                    // Use connection string from file.
+                    connStr = config.GetConnectionString("DefaultConnection");
+                }
 
                 /***
                  Whether the connection string came from the local development configuration file
@@ -72,12 +71,12 @@ namespace API.Extentions
                 //for Postgrase
                 options.UseNpgsql(connStr);
 
-            //     //for MYSQL
-            //     var serverVersion = new MySqlServerVersion(new Version(5, 7, 23));
-            //     connStr = config.GetConnectionString("DefaultConnection");
+                //     //for MYSQL
+                //     var serverVersion = new MySqlServerVersion(new Version(5, 7, 23));
+                //     connStr = config.GetConnectionString("DefaultConnection");
                 //Pamelo Mysql
-            //     options.UseMySql(connStr,serverVersion);
-            //    // options.UseMySQL(connStr);(connStr);
+                //     options.UseMySql(connStr,serverVersion);
+                //    // options.UseMySQL(connStr);(connStr);
 
             });
 
