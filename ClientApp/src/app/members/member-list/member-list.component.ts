@@ -33,7 +33,7 @@ export class MemberListComponent implements OnInit {
   }
 
   loadMembers() {
-    console.log(this.userParams);
+   // console.log(this.userParams);
     this.memberServices.setUserParams(this.userParams);
     this.memberServices.getMembers(this.userParams).subscribe(response => {
       this.members = response.result;

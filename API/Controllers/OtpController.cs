@@ -139,32 +139,33 @@ namespace API.Controllers
             return BadRequest("Somethig wrong");
         }
 
-        [HttpPost("forgot-pwd")]
-        public async Task<ActionResult> ForgotPassword(ForgotPwdDto forgotPwdDto)
-        {
-            var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(forgotPwdDto.username.ToLower());
-            if (user == null)
-            {
-                return BadRequest("User not valid");
-            }
-            else
-            {
-                var mobile = await _unitOfWork.UserRepository.GetUserMobile(user.UserName);
-                if (mobile == null) return BadRequest("Mobile number not registered");
-            }
+        // [HttpPost("forgot-pwd")]
+        // public async Task<ActionResult> ForgotPassword(ForgotPwdDto forgotPwdDto)
+        // {
+        //     var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(forgotPwdDto.username.ToLower());
+        //     if (user == null)
+        //     {
+        //         return BadRequest("User not valid");
+        //     }
+        //     else
+        //     {
+        //         var mobile = await _unitOfWork.UserRepository.GetUserMobile(user.UserName);
+        //         if (mobile == null) return BadRequest("Mobile number not registered");
+        //     }
 
-            var otp = new OtpDto
-            {
-                phonenumber = forgotPwdDto.mobile,
-                otp = forgotPwdDto.otp
-            };
+        //     var otp = new OtpDto
+        //     {
+        //         phonenumber = forgotPwdDto.mobile,
+        //         otp = forgotPwdDto.otp
+        //     };
 
-            var result = await _unitOfWork.OtpRepository.VerifyOtp(otp);
-            if (!result) return BadRequest("Not Valid");
+        //     var result = await _unitOfWork.OtpRepository.VerifyOtp(otp);
+        //     if (!result) return BadRequest("Not Valid");
 
-            return Ok(forgotPwdDto);
+        //     // var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        //     return Ok(forgotPwdDto);
 
-        }
+        // }
 
 
     }

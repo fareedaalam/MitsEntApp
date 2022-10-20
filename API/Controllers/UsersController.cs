@@ -55,7 +55,6 @@ public class UsersController : BaseApiController
         }
         catch (Exception ex)
         {
-
             throw;
         }
     }
@@ -90,7 +89,8 @@ public class UsersController : BaseApiController
         var photo = new Photo
         {
             Url = result.SecureUrl.AbsoluteUri,
-            PublicId = result.PublicId
+            PublicId = result.PublicId,
+            AppUserId = user.Id
         };
 
         if (user.Photos.Count == 0)

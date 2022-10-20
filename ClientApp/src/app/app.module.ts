@@ -37,6 +37,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { ContestantComponent } from './members/contestant/contestant.component';
 import { ForgotPasswordComponent } from './admin/forgot-password/forgot-password.component';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -66,7 +67,8 @@ import { ForgotPasswordComponent } from './admin/forgot-password/forgot-password
     RolesModalComponent,
     ConfirmDialogComponent,
     ContestantComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

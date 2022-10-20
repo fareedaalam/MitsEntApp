@@ -1,8 +1,10 @@
 <div class="text-center mt-3">
-    <p>{{predicate ==='liked' ? 'Member I voted:' : 'Member who voted me:'}}
-    <strong class="fs-3 text-primary">{{pagination.totalItems}}</strong>
-    </p>
-        
+    <ng-container>
+        <p>{{predicate ==='liked' ? 'Member I voted:' : 'Member who voted me:'}}
+            <strong class="fs-3 text-primary">{{pagination.totalItems}}</strong>
+        </p>
+    </ng-container>
+
 </div>
 
 

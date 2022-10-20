@@ -69,7 +69,7 @@ export class PhotoEditorComponent implements OnInit {
     }
 
     this.uploader.response.subscribe(res => {
-      console.log(res);
+     // console.log(res);
     })
 
     this.uploader.onSuccessItem = (item, response, header, success) => {

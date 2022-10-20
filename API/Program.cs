@@ -23,13 +23,13 @@ app.UseRouting();
 //Cross site 
 app.UseCors(x => x.AllowAnyHeader()
     .AllowAnyMethod()
-    .WithOrigins("http://localhost:4200",
-    "https://localhost:4200",
-    "https://web.postman.co",
-    "https://web.postman.co","https://merajazba.com","http://merajazba.com")
-    .AllowCredentials())
-    ;
+    //.AllowAnyOrigin()
+    //.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://web.postman.co", "https://www.merajazba.com")
+    .WithOrigins(app.Configuration.GetSection("AllowedHosts").Get<string[]>())
+    .AllowCredentials()
+   );
 app.UseAuthentication();
+
 app.UseAuthorization();
 //to use default and static file user basically agular 
 app.UseDefaultFiles();

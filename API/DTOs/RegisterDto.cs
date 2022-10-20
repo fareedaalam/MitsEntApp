@@ -21,7 +21,7 @@ namespace API.DTOs
         [StringLength(25, MinimumLength = 4)]
         public string Password { get; set; }
 
-        public string Otp {get;set;}
+        public string? Otp {get;set;}
 
 
     }

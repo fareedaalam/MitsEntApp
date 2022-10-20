@@ -7,9 +7,12 @@ public class AccountController : BaseApiController
     private readonly IMapper _mapper;
     private readonly UserManager<AppUser> _userManager;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
+    public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
+         ITokenService tokenService, IMapper mapper, IUnitOfWork unitOfWork)
     {
+        _unitOfWork = unitOfWork;
         _signInManager = signInManager;
         _userManager = userManager;
         _mapper = mapper;
@@ -27,7 +30,7 @@ public class AccountController : BaseApiController
 
         int RegistrationCount = _userManager.Users.Count(x => x.KnownAs == "contestant");
         if (RegistrationCount >= userParams.RegistrationCount) return BadRequest("Registration is over!");
-              
+
         if (await MobileExists(registerDto.PhoneNumber)) return BadRequest("Mobile number already registerd");
 
         // using var hmac = new HMACSHA512();
@@ -100,8 +103,59 @@ public class AccountController : BaseApiController
         }
 
     }
-   
-   
+
+    [HttpPost("forgot-pwd")]
+    public async Task<ActionResult> ForgotPassword(ForgotPwdDto forgotPwdDto)
+    {
+        var user = await _userManager.Users
+            .SingleOrDefaultAsync(x => x.UserName == forgotPwdDto.username.ToLower() 
+                && x.PhoneNumber == forgotPwdDto.phonenumber);
+
+        if (user == null)
+        {
+            return BadRequest("User or mobile not valid");
+        }
+
+        var otp = new OtpDto
+        {
+            phonenumber = forgotPwdDto.phonenumber,
+            otp = forgotPwdDto.otp
+        };
+
+        var result = await _unitOfWork.OtpRepository.VerifyOtp(otp);
+        if (!result) return BadRequest("OTP Not Valid");
+
+      
+        var token = new UpdatePwdDto{
+            token=await GetTokenForUpdate(user),
+            username=user.UserName,
+            password=""
+        };
+        return Ok(token);
+
+    }
+
+    [HttpPost("update-pwd")]
+    public async Task<ActionResult> UpdatePassword(UpdatePwdDto updatePwdDto)
+    {
+        var user = await _userManager.Users
+           //.Include(p => p.Photos)
+           .SingleOrDefaultAsync(x => x.UserName == updatePwdDto.username.ToLower());
+
+        //var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var result = await _userManager.ResetPasswordAsync(user, updatePwdDto.token, updatePwdDto.password);
+
+        // var result = await _userManager.UpdateSecurityStampAsync(user);
+        if (!result.Succeeded) return BadRequest(result.Errors);
+
+        return Ok(result);
+
+    }
+
+    private async Task<string> GetTokenForUpdate(AppUser user)
+    {        //Genrate new token
+        return await _userManager.GeneratePasswordResetTokenAsync(user);
+    }
     private async Task<bool> UserExists(String username)
     {
 

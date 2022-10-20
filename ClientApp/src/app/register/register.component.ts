@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit {
 
       },
       error: error => {
-        console.log(error);
+       // console.log(error);
         this.toastr.error(error.error)
         //this.validationErrors = array;
       }

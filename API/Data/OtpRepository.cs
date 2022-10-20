@@ -47,8 +47,6 @@ namespace API.Data
                 .FirstOrDefaultAsync();
         }
 
-
-
         public void Update(Otps user)
         {
             _context.Entry(user).State = EntityState.Modified;
@@ -60,9 +58,5 @@ namespace API.Data
             return await _context.Otps.AnyAsync(x => x.Mobile == otp.phonenumber && x.OTP == otp.otp);
         }
 
-              
-        
-
-       
     }
 }

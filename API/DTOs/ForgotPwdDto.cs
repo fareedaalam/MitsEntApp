@@ -8,7 +8,7 @@ namespace API.DTOs
     public class ForgotPwdDto
     {
         public string username { get; set; }
-        public string mobile { get; set; }
+        public string phonenumber { get; set; }
         public string otp { get; set; }
 
     }

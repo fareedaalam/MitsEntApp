@@ -1,0 +1,43 @@
+
+ <div class="container-fluid login-form">
+    <div class="row">
+       <div class="col-lg-6 first-col">
+          <img src="../assets/yahoo.png" class="img-fluid yahoo-img" alt="">
+          <h1>Vote for<span class="chance ps-3">Me</span>
+          </h1>
+          <p>
+             Do you want your favourite contestant to win ? Just vote them. To vote your contestant. All you
+             need to do is Login!
+          </p>
+       </div>
+       <div class="col-lg-6 second-col">
+ 
+ 
+ 
+ 
+ 
+ 
+          <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" autocomplete="off">
+             <h4>Login to your account</h4>
+             <div class="mt-4 mb-3">
+                <input name="username" [formControl]='loginForm.controls["username"]' class="form-control" type="text"
+                   placeholder="Username">
+             </div>
+             <div class="mt-4 mb-4">
+                <input name="password" [formControl]='loginForm.controls["password"]' class="form-control me-sm-2"
+                   type="password" placeholder="Password">
+             </div>
+             <button type="submit" class="btn login-btn">Login</button>
+             <div class="mt-2">
+                <a routerLink="/forgotpassword" class="text frgt-pswd">Forget Password ?</a>
+             </div>
+          </form>
+ 
+ 
+ 
+          <p class="mt-5 acc-para"><span class="acc-span">Don't Have An Accout ?</span><a href="/register"
+                class="text btn create-btn ms-3">Create New</a>
+ 
+       </div>
+    </div>
+ </div>

@@ -10,5 +10,6 @@ namespace API.DTOs
         public string otp { get; set; }
 
         public string phonenumber { get; set; }
+        
     }
 }
