@@ -6,8 +6,10 @@ namespace API.Controllers
     public class AdminController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
-        public AdminController(UserManager<AppUser> userManager)
+        private readonly IMapper _mapper;
+        public AdminController(UserManager<AppUser> userManager, IMapper mapper)
         {
+            _mapper = mapper;
             _userManager = userManager;
         }
 
@@ -29,7 +31,7 @@ namespace API.Controllers
              }).ToListAsync();
             return Ok(users);
         }
-        
+
 
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
@@ -67,11 +69,24 @@ namespace API.Controllers
             user.IsActive = user.IsActive == true ? false : true;
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded) return BadRequest("Failed to " + user.IsActive + "to roles");
-                     
-            return Ok(result);          
+
+            return Ok(result);
 
         }
 
-    
+        [HttpPut("edit-user/{username}")]
+        public async Task<ActionResult> UpdateUser(string username,UpdateUserDto updateUserDto)
+        {
+            var user = await _userManager.FindByNameAsync(username.ToLower());
+            //Map dto with usertable
+            _mapper.Map(updateUserDto, user);
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded) return BadRequest("Failed");
+            return Ok(updateUserDto);
+
+        }
+
+
     }
 }

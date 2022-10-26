@@ -1,0 +1,75 @@
+<div class="container">
+  <form class="row g-3" [formGroup]="updateForm" (ngSubmit)=" updateForm.valid && update()" autocomplete="off">
+
+    <div class="col-md-4">
+      <label class="control-label" style="margin-right:10px;">I am a:</label>
+      <label class="radio-inline">
+        <input type="radio" value='male' formControlName='gender'>Male
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value='female' formControlName='gender' class="ml-3">Female
+      </label>
+    </div>
+
+
+    <!-- memer Or contestant -->
+    <div class="col-md-4">
+      <label class="radio-inline">
+        <input type="radio" value='contestant' formControlName='knownAs'>Contestant
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value='member' formControlName='knownAs' class="ml-3">Member
+      </label>
+
+
+    </div>
+
+    <div class="col-md-6">
+      <app-text-input [formControl]='updateForm.controls["introduction"]' [label]='"Introduction"'>
+      </app-text-input>
+    </div>
+    <div class="col-md-6">
+      <app-text-input [formControl]='updateForm.controls["lookingFor"]' [label]='"Looking For"'>
+      </app-text-input>
+    </div>
+    <div class="col-6">
+      <app-text-input [formControl]='updateForm.controls["interests"]' [label]='"Interests"'>
+      </app-text-input>
+    </div>
+    <div class="col-6">
+      <app-text-input [formControl]='updateForm.controls["city"]' [label]='"City"'>
+      </app-text-input>
+    </div>
+    <div class="col-md-6">
+      <app-text-input [formControl]='updateForm.controls["country"]' [label]='"Country"'>
+      </app-text-input>
+    </div>
+
+    <div class="col-md-6">
+      <app-text-input [formControl]='updateForm.controls["phonenumber"]' [label]='"Mobile"'>
+      </app-text-input>
+    </div>
+    <div class="col-md-6">
+      <app-date-input [formControl]='updateForm.controls["dateOfBirth"]' [label]='"Date Of Birth"' [maxDate]="maxDate">
+      </app-date-input>
+    </div>
+    <div class="col-md-6">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="isActive" formControlName='isActive' id="isActive">
+        <label class="form-check-label" for="isActive">
+          IsActive
+        </label>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <button type="submit" class="btn btn-lg btn-primary">Update</button>
+      <button type="button" class="btn btn-lg btn-info ml-3" routerLink="/admin">Back</button>
+    </div>
+    <div class="col-md-12">
+      <span *ngIf="this.updateForm.valid"> <img src="../../assets/icon-up.png" width="auto" height="40px" style="margin-top: 10px;"> </span>
+      <span *ngIf="!this.updateForm.valid"> <img src="../../assets/icon-down.png" width="auto" height="40px" style="margin-top: 10px;"> </span>
+    </div>
+   
+  </form>
+
+</div>

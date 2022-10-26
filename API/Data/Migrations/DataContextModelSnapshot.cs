@@ -59,7 +59,7 @@ namespace API.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int?>("AccessFailedCount")
                         .HasColumnType("integer");
 
                     b.Property<string>("City")
@@ -82,7 +82,7 @@ namespace API.Data.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<bool>("EmailConfirmed")
+                    b.Property<bool?>("EmailConfirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("Gender")
@@ -100,10 +100,10 @@ namespace API.Data.Migrations
                     b.Property<string>("KnownAs")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("LastActive")
+                    b.Property<DateTime?>("LastActive")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("LockoutEnabled")
+                    b.Property<bool?>("LockoutEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
@@ -126,13 +126,13 @@ namespace API.Data.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("text");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
+                    b.Property<bool?>("PhoneNumberConfirmed")
                         .HasColumnType("boolean");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
-                    b.Property<bool>("TwoFactorEnabled")
+                    b.Property<bool?>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
@@ -175,6 +175,7 @@ namespace API.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime?>("DateRead")
@@ -190,6 +191,7 @@ namespace API.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("RecipientUsername")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<bool>("SenderDeleted")
@@ -199,6 +201,7 @@ namespace API.Data.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("SenderUserName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -216,6 +219,7 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("OTP")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Mobile");
@@ -241,6 +245,7 @@ namespace API.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Url")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");

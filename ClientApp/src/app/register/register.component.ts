@@ -81,8 +81,6 @@ export class RegisterComponent implements OnInit {
   register() {
     this.accountServices.register(this.registerForm.value).subscribe({
       next: responce => {
-        
-
         if (this.user.username === 'Admin' || this.user.username === 'admin') {
           this.router.navigateByUrl('/register');
         } else {
@@ -131,6 +129,7 @@ export class RegisterComponent implements OnInit {
   }
 
   cancle() {
+    console.log('cancle');
     this.cancelRegister.emit(false);
   }
 

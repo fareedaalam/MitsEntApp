@@ -10,7 +10,7 @@ namespace API.Entities
         // public byte[] PasswordSalt { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime Created { get; set; } = DateTime.Now;
-        public DateTime LastActive { get; set; } = DateTime.Now;
+        public DateTime? LastActive { get; set; } = DateTime.Now;
         public string? Gender { get; set; }
         public string? Introduction { get; set; }
         public string? LookingFor { get; set; }
@@ -30,7 +30,16 @@ namespace API.Entities
 
         public ICollection<AppUserRole> UserRoles { get; set; }
 
-       // public ICollection<Otps> OtpsSent { get; set; }
+       /// column from base identity table set null
+       public bool?  EmailConfirmed { get; set; }
+       public bool?  PhoneNumberConfirmed { get; set; }
+       public bool?  TwoFactorEnabled { get; set; }
+       public bool?  LockoutEnabled { get; set; }
+       public int?  AccessFailedCount { get; set; }
+       
+       
+       
+       
 
     }
 }

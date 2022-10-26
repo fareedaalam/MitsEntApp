@@ -89,10 +89,14 @@ namespace API.Controllers
                 else
                 { //Update
                     _unitOfWork.OtpRepository.Update(data);
+                   // await _unitOfWork.Complete();
                 }
+                
                 //send sms...
                 var sms = await _smsService.SendSms(data.Mobile, data.OTP);
                 return Ok(new OtpDto { phonenumber = mobile });
+                
+
 
             }
 

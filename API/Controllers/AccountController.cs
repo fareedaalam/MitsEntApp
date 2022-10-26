@@ -39,7 +39,7 @@ public class AccountController : BaseApiController
         // user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password));
         // user.PasswordSalt = hmac.Key;
         //user.DateOfBirth= DateTime.SpecifyKind(user.DateOfBirth,DateTimeKind.Utc);
-
+        
 
         var result = await _userManager.CreateAsync(user, registerDto.Password);
         if (!result.Succeeded) return BadRequest(result.Errors);

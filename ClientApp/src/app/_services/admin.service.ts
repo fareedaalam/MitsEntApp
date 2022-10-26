@@ -23,4 +23,8 @@ export class AdminService {
     return this.http.put(this.baseUrl + 'admin/deactivate/' + username, {});
 
   }
+
+  updateUser(username: string, model: any) {
+    return this.http.put(this.baseUrl + 'admin/edit-user/' + username, model);
+  }
 }

@@ -16,12 +16,11 @@
     </div>
     <div class="card-body p-1">
         <h6 class="card-title-text-center text-center" style="font-weight:bold ;">
-            {{member.username}}
-            <br>
+            
             <!--<i class="fa fa-user mr-2"></i> {{member.username}} - {{member.knownAs}} - {{member.age}} -->
             <button (click)="addLike(member)" class="btn btn-primary btn-sm mt-2" style="background-color:#ec268f;">
                 <i class="fa fa-heart"></i> &nbsp; Vote me</button>
         </h6>
-        <!-- <p class="card-text text-muted text-center">{{member.city}}</p> -->
+        <p class="card-text text-muted text-center">{{member.username}}</p>
     </div>
 </div>

@@ -52,6 +52,8 @@ public class UsersController : BaseApiController
         {
             return await _unitOfWork.UserRepository.GetMemberAsync(username);
 
+
+
         }
         catch (Exception ex)
         {
@@ -69,8 +71,8 @@ public class UsersController : BaseApiController
         var user = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
         //Map dto with usertable
         _mapper.Map(memberUpdateDto, user);
-        
-      //  user.DateOfBirth()
+
+        //  user.DateOfBirth()
         _unitOfWork.UserRepository.Update(user);
         if (await _unitOfWork.Complete()) return NoContent();
         return BadRequest("Failed to update user");

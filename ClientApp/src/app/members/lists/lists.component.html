@@ -1,0 +1,39 @@
+<div class="text-center container mt-5">
+    <ng-container>
+        <p class="text-center main-heading">{{predicate ==='liked' ? 'Member I voted:' : 'Member who voted me:'}}
+            <strong class="fs-3 text-primary">{{pagination.totalItems}}</strong>
+        </p>
+    </ng-container>
+</div>
+
+
+<div class="container mt-3">
+    <div class="row upper-row">
+        <div class="btn-group" name="predicate">
+            <div class="col-lg-6">
+            <button class="btn btn-primary" btnRadio="liked" [(ngModel)]="predicate" (click)="loadLikes()">My
+                Votes</button>
+            </div>
+                <div class="col-lg-6">
+            <button class="btn btn-primary" btnRadio="likedBy" [(ngModel)]="predicate" (click)="loadLikes()">Who Voted
+                me</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid login-container">
+        <div class="row login-row">
+        <div class="col-lg-3 col-md-6" *ngFor="let member of members">
+            <app-member-card [member]="member"></app-member-card>
+        </div>
+    </div>
+    </div>
+
+</div>
+
+<!-- For paginations -->
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
+        nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>
+</div>

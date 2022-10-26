@@ -24,7 +24,7 @@ export class UserManagementComponent implements OnInit {
   getUsersWithRoles() {
     this.adminService.getUserWithRoles().subscribe(users => {
       this.users = users;
-      // console.log(this.users);
+       //console.log(this.users);
     })
   }
   ƒ
@@ -53,15 +53,10 @@ export class UserManagementComponent implements OnInit {
   }
 
   onCheckboxChange(e) {
-    this.adminService.DeActivateUser(e.target.value).subscribe({
-      // next(res) {
-      //  // console.log(res);
-      
-      //   },
-      // error(error) { 
-      //   console.log(error);
-      // }
-    })
+    // this.adminService.DeActivateUser(e.target.value).subscribe({
+     
+    // })
+   // console.log(e.target.value)
   }
 
   private getRolesArray(user) {

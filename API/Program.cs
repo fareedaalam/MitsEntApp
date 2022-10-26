@@ -24,8 +24,8 @@ app.UseRouting();
 app.UseCors(x => x.AllowAnyHeader()
     .AllowAnyMethod()
     //.AllowAnyOrigin()
-    //.WithOrigins("http://localhost:4200", "https://localhost:4200", "https://web.postman.co", "https://www.merajazba.com")
-    .WithOrigins(app.Configuration.GetSection("AllowedHosts").Get<string[]>())
+    .WithOrigins("http://localhost:4200", "https://localhost:4200", "https://web.postman.co", "https://www.merajazba.com","http://www.merajazba.com")
+    //.WithOrigins(app.Configuration.GetSection("AllowedHosts").Get<string[]>())
     .AllowCredentials()
    );
 app.UseAuthentication();
